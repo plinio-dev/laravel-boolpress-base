@@ -9,7 +9,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;  
 
 class PostController extends Controller
-{
+{   
+    protected $validation = [
+        'date' => 'required|date',
+        'content' => 'required|string',
+        'image' => 'nullable|url'
+    ];
+    
     /**
      * Display a listing of the resource.
      *
@@ -42,7 +48,18 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validation = $this->validation;
+        $validation['title'] = 'required|string|max:255|unique:posts';
+        
+        // validation
+        $request->validate($this->validation);
+
+        $data = $request->all();
+        
+        // controllo checkbox
+        $data['published'] = !isset($data['published']) ? 0 : 1;
+        // imposto lo slug partendo dal title
+        $data['slug'] = Str::slug($data['title'], '-');
     }
 
     /**
