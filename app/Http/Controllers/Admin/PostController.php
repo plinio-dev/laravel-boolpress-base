@@ -15,7 +15,7 @@ class PostController extends Controller
         'content' => 'required|string',
         'image' => 'nullable|url'
     ];
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -60,6 +60,17 @@ class PostController extends Controller
         $data['published'] = !isset($data['published']) ? 0 : 1;
         // imposto lo slug partendo dal title
         $data['slug'] = Str::slug($data['title'], '-');
+
+        // controllo checkbox
+        $data['published'] = !isset($data['published']) ? 0 : 1;
+        // imposto lo slug partendo dal title
+        $data['slug'] = Str::slug($data['title'], '-');
+
+        // Insert
+        $newPost = Post::create($data);    
+
+        // redirect
+        return redirect()->route('admin.posts.index');
     }
 
     /**
@@ -68,9 +79,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        //
+        
+        return view('admin.posts.show', compact('post'));
     }
 
     /**
