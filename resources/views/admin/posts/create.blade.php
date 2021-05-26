@@ -4,6 +4,17 @@
 	Crea un nuovo post
 @endsection
 
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+
 @section('content')
 <form action="{{route('admin.posts.store')}}" method="POST">
 	@csrf
@@ -28,7 +39,7 @@
 		<input class="form-check-input" type="checkbox" id="published" name="published">
 		<label class="form-check-label" for="published">Pubblicato</label>
 	</div>
-	<div class="mt-3">
+	{{-- <div class="mt-3">
 		<h3>Tags</h3>
 		@foreach ($tags as $tag)
 			<div class="form-check">
@@ -38,15 +49,10 @@
 				</label>
 			</div>
 		@endforeach
-	</div>
+	</div> --}}
 	<div class="mt-3">
 		<button type="submit" class="btn btn-primary">Crea</button>
 	</div>
 </form>
-
-
-
-
-
 
 @endsection
