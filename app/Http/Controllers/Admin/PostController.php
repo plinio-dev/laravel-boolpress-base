@@ -34,10 +34,11 @@ class PostController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        
+    {   
+        //prendo tutti i tag
+        $tags = Tag::all();
 
-    return view('admin.posts.create', /*compact('tags')*/);
+        return view('admin.posts.create', compact('tags'));
     }
 
     /**
@@ -93,7 +94,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', compact('post'));
+        $tags = Tag::all();
+
+        return view('admin.posts.edit', compact('post', 'tags'));
     }
 
     /**
